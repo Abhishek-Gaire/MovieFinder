@@ -8,7 +8,6 @@
         integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -16,18 +15,12 @@
     <script src="./js/script2.js" defer></script>
     <title>MoviesT</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <style>
-
-    </style>
 </head>
 
 <body>
-
-
     <header>
-
         <div class="nav-container">
-            <span id="logo"><a href="index.html"><img src="./logo.png" alt=""></a></span>
+            <span id="logo"><a href="/"><img src="./logo.png" alt=""></a></span>
             <nav>
                 <form action="">
                     <input type="text" placeholder="Search..." id="searchBar">
@@ -45,20 +38,22 @@
                     <i class='bx bx-chevron-left'></i> </button>
                 <button class="btn-cont right" onmousedown="scrollCard(this)"><i
                         class='bx bx-chevron-right'></i></button>
-                <div class="movie">
-                    <figure> <img src="https://image.tmdb.org/t/p/w500//j886YEkIUsiImY53px5VHKD4lRa.jpg" alt="">
-                        <div class="overlay">
-                            <div class="content">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit tenetur quos ducimus
-                                    tempora molestias officiis. Enim quidem exercitationem aperiam temporibus facere
-                                    similique, rem ex sapiente assumenda autem doloribus veritatis cupiditate.</p>
+                <% latestMovies.forEach((movie) => { %>
+                    <div class="card">
+                        <a href="/movie/<%=movie.id%>">
+                            <figure>
+                                <img src="https://image.tmdb.org/t/p/w500/<%=movie.poster_path%>" alt="<%= movie.title %>"/>
+                                <div class="overlay">
+                                    <div class="content">
+                                        <p><%=movie.overview %></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </figure>
-                    <span class="movie-rating">⭐ 5.0</span>
-                    <h3 class="movie-title">Ultra Man</h3>
-                    
-                </div>
+                            </figure>
+                        </a>
+                        <span class="movie-rating">⭐ <%= movie.vote_average %> </span>
+                        <h3 class="movie-title"><%=movie.title%></h3>
+                    </div>
+                    <% }); %>
             </div>
         </section>
         <section class="container tv">
@@ -68,7 +63,20 @@
                     <i class='bx bx-chevron-left'></i> </button>
                 <button class="btn-cont right" onmousedown="scrollCard(this)"><i
                         class='bx bx-chevron-right'></i></button>
-
+                        <% latestTV.forEach((movie) => { %>
+                            <div class="card">
+                                <figure>
+                                    <img src="https://image.tmdb.org/t/p/w500/<%=movie.poster_path%>" alt="<%= movie.title %>"/>
+                                    <div class="overlay">
+                                        <div class="content">
+                                            <p><%=movie.overview %></p>
+                                        </div>
+                                    </div>
+                                </figure>
+                                <span class="movie-rating">⭐ <%= movie.vote_average %> </span>
+                                <h3 class="movie-title"><%=movie.title%></h3>
+                            </div>
+                            <% }); %>
             </div>
         </section>
         <section class="container trending">
@@ -78,17 +86,27 @@
                     <i class='bx bx-chevron-left'></i> </button>
                 <button class="btn-cont right" onmousedown="scrollCard(this)"><i
                         class='bx bx-chevron-right'></i></button>
+                        <% trendingToday.forEach((movie) => { %>
+                            <div class="card">
+                                <figure>
+                                    <img src="https://image.tmdb.org/t/p/w500/<%=movie.poster_path%>" alt="<%= movie.title %>"/>
+                                    <div class="overlay">
+                                        <div class="content">
+                                            <p><%=movie.overview %></p>
+                                        </div>
+                                    </div>
+                                </figure>
+                                <span class="movie-rating">⭐ <%= movie.vote_average %> </span>
+                                <h3 class="movie-title"><%=movie.title%></h3>
+                            </div>
+                            <% }); %>
             </div>
         </section>
 
     </main>
-    <section id="loader">
+    <!-- <section id="loader">
         <div class="loader-spinner"></div>
-    </section>
-
-
-
+    </section> -->
+    
 </body>
-
-
 </html>
