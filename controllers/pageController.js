@@ -93,7 +93,13 @@ exports.getDetails = async (req, res, next) => {
 
   const recomendationURL = `${BASE_URL}/${type}/${id}/recommendations?${API_KEY}`;
   const recommendationsRes = await axios(recomendationURL);
-  const recommendationsData = await recommendationsRes.data.results;
+
+  let recommendationsData;
+
+  if (!recommendationsRes.data) {
+    recommendationsData = null;
+  }
+  recommendationsData = await recommendationsRes.data.results;
 
   const creditsURL = `${BASE_URL}/${type}/${id}/credits?${API_KEY}`;
   const creditsRes = await axios(creditsURL);
@@ -126,7 +132,7 @@ exports.getDetails = async (req, res, next) => {
     detailMovie,
     averageVote,
     date,
-    name,
+    name1,
     overview,
     creator,
     castArr,
