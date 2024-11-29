@@ -28,8 +28,6 @@
   </head>
 
   <body>
-    <h1 class="errMsg">Sorry No results Found</h1>
-
     <header>
       <div class="nav-container">
         <span id="logo"
@@ -51,6 +49,9 @@
       </div>
     </header>
     <main>
+      <% if(searchedData.length === 0) { %>
+      <h1 class="errMsg">Sorry No results Found</h1>
+      <% } else { %>
       <section class="container results">
         <div class="movies-container" id="searchResults">
           <% searchedData.forEach((movie) => { %>
@@ -77,10 +78,8 @@
           <% }); %>
         </div>
       </section>
+      <% } %>
     </main>
-    <!-- <section id="loader">
-        <div class="loader-spinner"></div>
-    </section> -->
   </body>
   <script></script>
 </html>

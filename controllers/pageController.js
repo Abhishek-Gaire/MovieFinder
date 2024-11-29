@@ -51,20 +51,21 @@ exports.getIndex = async (req, res, next) => {
 };
 
 exports.getDetails = async (req, res, next) => {
-  let creator, imgSrc, creatorFound, url, name1;
+  let creator, imgSrc, creatorFound, url, trailerUrl, name1;
 
-  const id = req.params.id;
+  const paramId = req.params.id;
   const type = req.query.type;
 
   if (type === "movie") {
-    url = `${BASE_URL}/movie/${id}?${API_KEY}`; //here we are using the api to get the data of the movie with the id given in the url
+    url = `${BASE_URL}/movie/${paramId}?${API_KEY}`; //here we are using the api to get the data of the movie with the paramId given in the url
   } else if (type === "tv") {
-    url = `${BASE_URL}/tv/${id}?${API_KEY}`; //here we are using the api to get the data of the tv show with the id given in the
+    url = `${BASE_URL}/tv/${paramId}?${API_KEY}`; //here we are using the api to get the data of the tv show with the paramId given in the
   }
   if (!url) {
     return;
   }
   const detailMovie = await fetchDetails(url);
+  // console.log(detailMovie);
   const {
     vote_average,
     title,
@@ -75,8 +76,24 @@ exports.getDetails = async (req, res, next) => {
     first_air_date,
     original_title,
     original_name,
+    id,
   } = detailMovie;
 
+  // console.log(id);
+  if (type === "movie") {
+    trailerUrl = `${BASE_URL}/movie/${id}/videos?${API_KEY}`; //here we are using the api to get the data of the movie with the paramId given in the url
+  } else if (type === "tv") {
+    trailerUrl = `${BASE_URL}/tv/${id}/videos?${API_KEY}`; //here we are using the api to get the data of the tv show with the paramId given in the
+  }
+
+  const trailerData = await fetchDetails(trailerUrl);
+  let trailers;
+
+  trailers = trailerData.results.filter((item) => item.type === "Trailer");
+  if (trailers.length === 0) {
+    trailers = trailerData.results.filter((item) => item.type === "Teaser");
+  }
+  // console.log(trailers);
   if (detailMovie.created_by && detailMovie.created_by.length != 0) {
     creatorFound = true;
     creator = detailMovie.created_by[0].name;
@@ -139,6 +156,7 @@ exports.getDetails = async (req, res, next) => {
     imgSrc,
     type,
     recommendationsData,
+    trailers,
   });
 };
 
@@ -148,7 +166,6 @@ exports.searchMovie = async (req, res, next) => {
   const searchRes = await axios(url);
 
   const searchedData = await searchRes.data.results;
-  // console.log(searchedData);
 
   res.render("searchpage", { searchedData });
 };

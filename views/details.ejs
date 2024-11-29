@@ -64,9 +64,6 @@
             <span id="ratingQty"><%=detailMovie.vote_count%></span>
           </p>
           <section class="type-genre">
-            <!-- style="<% if(type === 'movie') {%>
-                grid-template-columns: 73px 1fr;
-            <% } %> " -->
             <div id="type" class="type">
               <% if(type === "tv") {%> TV series <%} else { %> Movie <%} %>
             </div>
@@ -116,6 +113,11 @@
               </tr>
               <%}%>
             </table>
+            <% if(trailers.length === 0){ %>
+            <p style="color: red">No Trailers Available</p>
+            <%} else {%>
+            <button id="watchTrailerBtn">Watch Trailer</button>
+            <% }%>
           </section>
         </div>
       </div>
@@ -144,7 +146,9 @@
                 </div>
               </figure>
             </a>
-            <span class="movie-rating">⭐ <%= movie.vote_average %> </span>
+            <span class="movie-rating"
+              >⭐ <%= movie.vote_average.toFixed(1) %>
+            </span>
             <h3 class="movie-title">
               <%=movie.title || movie.name || movie.original_name ||
               movie.original_title%>
@@ -153,7 +157,86 @@
           <% }); %>
         </div>
       </section>
+      <div>
+        <% if(trailers.length !== 0 ) { if (trailers.length === 1 ) { %>
+        <!-- Popup Modal -->
+        <div id="trailerPopup" class="popup">
+          <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <iframe
+              src="https://www.youtube.com/embed/<%=trailers[0].key%>"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <%} else if(trailers.length === 2) { %>
+        <!-- Popup Modal -->
+        <div id="trailerPopup" class="popup">
+          <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <iframe
+              src="https://www.youtube.com/embed/<%=trailers[1].key%>"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <% } else { %> <% const foundTrailer = trailers.find( trailer =>
+        trailer.name.includes("Official Trailer") ||
+        trailer.name.includes("Series Trailer") || trailer.type === "Teaser") ||
+        trailer.name.includes("Trailer"); %> %> <% if (foundTrailer) { %>
+
+        <!-- Popup Modal -->
+        <div id="trailerPopup" class="popup">
+          <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <iframe
+              src="https://www.youtube.com/embed/<%=foundTrailer.key%>"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <% } %> <% } %> <%} %>
+      </div>
     </main>
+
+    <script>
+      // Select elements
+      const watchTrailerBtn = document.getElementById("watchTrailerBtn");
+      const trailerPopup = document.getElementById("trailerPopup");
+      const closePopup = document.getElementById("closePopup");
+      let iframeSrc = trailerPopup.querySelector("iframe").src;
+
+      // Open Popup
+      watchTrailerBtn.addEventListener("click", () => {
+        trailerPopup.style.display = "block";
+      });
+
+      closePopup.addEventListener("click", () => {
+        trailerPopup.style.display = "none";
+        // Stop the trailer playback
+        const iframe = trailerPopup.querySelector("iframe");
+        iframe.src = "";
+        iframe.src = iframeSrc;
+      });
+
+      // Close Popup on outside click
+      window.addEventListener("click", (e) => {
+        if (e.target === trailerPopup) {
+          trailerPopup.style.display = "none";
+          const iframe = trailerPopup.querySelector("iframe");
+          iframe.src = "";
+          iframe.src = iframeSrc;
+        }
+      });
+    </script>
   </body>
-  <script></script>
 </html>

@@ -288,7 +288,7 @@ main {
 }
 
 .errMsg {
-  display: none;
+  display: block;
   color: red;
   position: absolute;
   top: 50%;

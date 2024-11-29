@@ -451,6 +451,71 @@ table tr td {
   animation: spin 2s infinite linear;
 }
 
+/* General popup styling */
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px); /* Blur the background */
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  z-index: 9; /* Above all other elements */
+}
+
+/* Centered popup content */
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 1200px; /* Same as iframe width */
+  height: 800px; /* Same as iframe height */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Iframe dimensions matching popup content */
+.popup-content iframe {
+  width: 100%; /* Match the container's width */
+  height: 100%; /* Match the container's height */
+  border: none; /* Remove iframe border */
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: -30px;
+  right: 0px;
+  font-size: 5rem;
+  font-weight: bold;
+  color: rgb(227, 79, 79);
+  cursor: pointer;
+  background: none;
+  border: 1 px red;
+  z-index: 99;
+}
+.close:hover {
+  color: red;
+}
+#watchTrailerBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#watchTrailerBtn:hover {
+  background-color: #e5533d;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
