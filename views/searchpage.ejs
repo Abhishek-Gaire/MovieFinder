@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
+      integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="./js/searchpage.js" defer></script> -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>MoviesT</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <style>
+      body {
+        overflow: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="nav-container">
+        <span id="logo"
+          ><a href="/"><img src="/logo.png" alt="" /></a
+        ></span>
+        <nav>
+          <form action="/search" method="post">
+            <input
+              type="text"
+              name="searchQuery"
+              placeholder="Search..."
+              id="searchBar"
+            />
+            <button type="submit" id="searchBtn">
+              <i class="bx bx-search"></i>
+            </button>
+          </form>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <% if(searchedData.length === 0) { %>
+      <h1 class="errMsg">Sorry No results Found</h1>
+      <% } else { %>
+      <section class="container results">
+        <div class="movies-container" id="searchResults">
+          <% searchedData.forEach((movie) => { %>
+          <div class="card">
+            <a href="/movie/<%=movie.id%>?type=<%=movie.media_type%>">
+              <figure>
+                <img
+                  src="https://image.tmdb.org/t/p/w500/<%=movie.poster_path%>"
+                  alt="<%= movie.title %>"
+                />
+                <div class="overlay">
+                  <div class="content">
+                    <p><%=movie.overview %></p>
+                  </div>
+                </div>
+              </figure>
+            </a>
+            <span class="movie-rating">⭐ <%= movie.vote_average %> </span>
+            <h3 class="movie-title">
+              <%=movie.title || movie.name || movie.original_name ||
+              movie.original_title%>
+            </h3>
+          </div>
+          <% }); %>
+        </div>
+      </section>
+      <% } %>
+    </main>
+  </body>
+  <script></script>
+</html>
