@@ -8,20 +8,14 @@ const MOVIE_SEARCH_URL =
   BASE_URL + "/search/multi?" + "&language=en-US&" + API_KEY;
 
 const fetchDatasFORMultiple = async (url) => {
-  // console.log(url);
   const res = await axios(url);
-  // console.log(res);
   const data = await res.data.results;
-  // console.log(data);
   return data;
 };
 
 const fetchDetails = async (url) => {
-  // console.log(url);
   const res = await axios(url);
-  // console.log(res);
   const data = await res.data;
-  // console.log(data);
   return data;
 };
 
@@ -65,7 +59,7 @@ exports.getDetails = async (req, res, next) => {
     return;
   }
   const detailMovie = await fetchDetails(url);
-  // console.log(detailMovie);
+
   const {
     vote_average,
     title,
@@ -79,7 +73,6 @@ exports.getDetails = async (req, res, next) => {
     id,
   } = detailMovie;
 
-  // console.log(id);
   if (type === "movie") {
     trailerUrl = `${BASE_URL}/movie/${id}/videos?${API_KEY}`; //here we are using the api to get the data of the movie with the paramId given in the url
   } else if (type === "tv") {
@@ -93,7 +86,7 @@ exports.getDetails = async (req, res, next) => {
   if (trailers.length === 0) {
     trailers = trailerData.results.filter((item) => item.type === "Teaser");
   }
-  // console.log(trailers);
+
   if (detailMovie.created_by && detailMovie.created_by.length != 0) {
     creatorFound = true;
     creator = detailMovie.created_by[0].name;
